@@ -4,14 +4,13 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 
     // home page
         .when('/', {
-        templateUrl: 'views/home.html',
-        controller: 'MainController'
-    })
-
-    .when('/login', {
-        templateUrl: 'views/login.html',
-        controller: 'LoginController'
-    })
+            templateUrl: 'views/home.html',
+            controller: 'MainController'
+        })
+        .when('/login', {
+            templateUrl: 'views/login.html',
+            controller: 'LoginController'
+        })
 
     .when('/edit', {
         templateUrl: 'views/edit.html',
@@ -20,7 +19,7 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 
     $locationProvider.html5Mode({
         enabled: true,
-        requireBase: false
+        requireBase: true
     });
 
 }]);

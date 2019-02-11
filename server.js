@@ -11,7 +11,9 @@ app.get("/", function(req, res) {
     res.sendFile(__dirname + "./public/index.html");
 });
 
-
+app.get('*', function(req, res) {
+    res.sendfile('./public/index.html');
+});
 
 app.listen(8080, function() {
     console.log("Listening on PORT 8080");
