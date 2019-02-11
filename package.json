@@ -1,0 +1,18 @@
+{
+    "name": "assignment",
+    "version": "0.0.0",
+    "description": "project",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "sravan kumar nangunoori",
+    "license": "ISC",
+    "dependencies": {
+        "angular": "^1.7.7",
+        "body-parser": "^1.15.2",
+        "express": "^4.14.0",
+        "mongoose": "^4.7.2"
+    }
+}
