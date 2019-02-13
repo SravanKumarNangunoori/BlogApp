@@ -8,6 +8,7 @@
     "angular": "latest",
     "angular-route": "latest",
     "jquery": "^3.3.1",
-    "angular-ui-tinymce": "^0.0.19"
+    "angular-ui-tinymce": "^0.0.19",
+    "angularjs-social-login": "^2.6.1"
   }
 }

@@ -5,18 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-signin-client_id" content="323609165869-5gm5offv0o185b81orktsc1nam84d0ol.apps.googleusercontent.com">
     <title>BLOG</title>
     <base href="/">
     <!-- CSS -->
     <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="css/styles.css">
+
     <!-- JS -->
     <!-- Angular -->
     <script src="libs/angular/angular.min.js"></script>
     <script src="libs/angular-route/angular-route.min.js"></script>
+    <script src="libs/jquery/dist/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- Tinymce -->
     <script type="text/javascript" src="libs/tinymce/tinymce.js"></script>
     <script type="text/javascript" src="libs/angular-ui-tinymce/src/tinymce.js"></script>
+
+
+    <script src="libs/angularjs-social-login/angularjs-social-login.js"></script>
+    <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
     <!-- custom js -->
     <script src="js/approutes.js"></script>
     <script src="js/controllers/MainCtrl.js"></script>
@@ -25,20 +34,36 @@
 
 <body ng-app="myApp" ng-controller="MainController">
 
-    <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand text-white">Blog App </a>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/edit">Write</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
-            </li>
-        </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand text-white" href="/">Blog App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li ng-show="userLogggedIn" class="nav-item active">
+                    <a class="nav-link text-white" href="/edit">Contribute to Blog <span class="sr-only">(current)</span></a>
+                </li>
 
+                <li ng-show="!userLogggedIn" class="nav-item active">
+                    <a class="nav-link text-white"><button g-login type="button">Google Login</button></a>
+                </li>
 
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li ng-show="userLogggedIn" class="nav-item active">
+                    <a class="nav-link text-white">Hi {{userProfile.name}} </a>
+                </li>
+
+            </ul>
+
+        </div>
     </nav>
+    <div ng-show="!userLogggedIn">
+        <h4>Please login to contribute to the blog</h4>
+    </div>
 
+    <button ng-click="logout()">logout</button>
     <div class="container-fluid ">
         <!-- Router -->
         <div ng-view></div>
