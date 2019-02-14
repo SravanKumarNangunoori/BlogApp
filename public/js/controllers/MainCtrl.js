@@ -1,72 +1,78 @@
-angular.module('MainModule', ['socialLogin']).controller('MainController', function($scope, socialLoginService, $rootScope) {
+angular.module('MainModule', ['socialLogin', 'ngSanitize']).controller('MainController', function($scope, $http, socialLoginService, $rootScope) {
     $scope.userLogggedIn = false;
 
 
-    $scope.userProfile = {};
+    $scope.posts = {};
+
+    $http.get("/api/getposts").then(function successCallback(response) {
+
+            $scope.posts = response.data;
+        },
+        function errorCallback(response) {
+            console.log("error in getting posts");
+        })
+
+
+
+
+
+    $scope.userExist = false;
+    $scope.userProfile = {
+        'name': '',
+        'email': ''
+    };
     $rootScope.$on('event:social-sign-in-success', function(event, userDetails) {
-        console.log(userDetails);
-        $scope.userProfile = userDetails;
+
+        $scope.userProfile.email = userDetails.email;
+        $scope.userProfile.name = userDetails.name;
+        console.log($scope.userProfile);
+        $http.get("/api/getusers").then(function successCallback(response) {
+            console.log(response.data);
+            var userlist = response.data;
+            for (let index = 0; index < userlist.length; index++) {
+                var element = userlist[index];
+                console.log(element.email == $scope.userProfile.email);
+                if (element.email == $scope.userProfile.email) {
+                    $scope.userExist = true;
+                    break;
+                }
+            }
+
+            console.log($scope.userExist);
+            if ($scope.userExist == false) {
+                $scope.addUser();
+            }
+
+        });
+
         $scope.userLogggedIn = true;
         $scope.$apply();
-    });
 
+
+
+    });
+    $scope.addUser = function() {
+        $http.post(
+                "/api/newuser",
+                JSON.stringify($scope.userProfile)
+            )
+            .then(function successCallback(response) {
+                console.log("posted");
+
+            }, function errorCallback(response) {
+                console.log("error in creating");
+            })
+    }
     $scope.logout = function() {
         socialLoginService.logout();
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(function() {
             $scope.userLogggedIn = false;
-            $scope.userProfile = {};
+            $scope.userProfile = {
+                name: '',
+                email: ''
+            };
         });
     }
-
-});
-
-angular.module('LoginModule', []).controller('LoginController', function($scope) {
-
-
-});
-
-angular.module('EditModule', []).controller('EditController', function($scope, $http) {
-
-
-    $scope.postObj = {
-        name: "",
-        mail: "",
-        content: ""
-    }
-    $scope.tinymceModel = 'Sample content';
-    $scope.getContent = function() {
-        console.log('Editor content:', $scope.tinymceModel);
-        $scope.postObj.name = "xxx";
-        $scope.postObj.mail = "a@a.com";
-        $scope.postObj.content = $scope.tinymceModel;
-
-        $http.post(
-                "/api/post",
-                JSON.stringify($scope.postObj)
-            )
-            .then(function successCallback(response) {
-                console.log("posted");
-
-
-                $scope.postObj = {
-                    name: "",
-                    mail: "",
-                    content: ""
-                }
-            }, function errorCallback(response) {
-                console.log("error in creating");
-            })
-    };
-    $scope.setContent = function() {
-        $scope.tinymceModel = 'Time: ' + (new Date());
-    };
-    $scope.tinymceOptions = {
-        plugins: 'link image code',
-        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
-    };
-
-
-
 
 });

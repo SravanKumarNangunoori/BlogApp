@@ -13,7 +13,9 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/api/', postModelController.getresponse);
 app.post('/api/post', postModelController.createPost);
-
+app.get('/api/getposts', postModelController.getPost);
+app.post('/api/newuser', userModelController.createUser);
+app.get('/api/getusers', userModelController.getUsers);
 
 
 // angular routes
