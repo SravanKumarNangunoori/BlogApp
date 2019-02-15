@@ -1,4 +1,19 @@
 .blog {
     border: 1px solid grey;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.gmail-login {
+    background: transparent;
+    border: transparent;
+    color: WHITE;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.header-text {
+    margin-left: 20px;
+    font-weight: 500;
     margin-top: 20px;
 }

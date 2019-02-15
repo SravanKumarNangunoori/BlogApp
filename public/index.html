@@ -18,6 +18,8 @@
     <script src="libs/angular-route/angular-route.min.js"></script>
     <script src="libs/jquery/dist/jquery.js"></script>
     <script src="libs/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="libs/simple-web-notification/web-notification.js"></script>
+    <script src="libs/angular-web-notification/angular-web-notification.js"></script>
 
     <!-- bootstrap -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -52,11 +54,11 @@
 
                 <li ng-show="!userLogggedIn" class="nav-item active">
                     <a class="nav-link text-white">
-                        <button g-login type="button">Google Login</button></a>
+                        <button g-login type="button" class="gmail-login"> Login</button></a>
                 </li>
                 <li ng-show="userLogggedIn" class="nav-item active">
                     <a class="nav-link text-white">
-                        <button ng-click="logout()">logout</button></a>
+                        <button ng-click="logout()" class="gmail-login">Logout</button></a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -69,7 +71,7 @@
         </div>
     </nav>
     <div ng-show="!userLogggedIn">
-        <h4>Please login to contribute to the blog</h4>
+        <h4 class="header-text">Please login to contribute to the blog</h4>
     </div>
 
     <div class="container-fluid ">

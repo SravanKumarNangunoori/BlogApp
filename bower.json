@@ -11,6 +11,7 @@
     "angular-ui-tinymce": "^0.0.19",
     "angularjs-social-login": "^2.6.1",
     "angular-sanitize": "^1.7.7",
-    "angular-web-notification": "^1.2.31"
+    "angular-web-notification": "^1.2.31",
+    "simple-web-notification": "^1.0.32"
   }
 }
