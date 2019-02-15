@@ -1,33 +1,31 @@
-angular.module('MainModule', ['socialLogin', 'ngSanitize']).controller('MainController', function($scope, $http, socialLoginService, $rootScope) {
+angular.module('MainModule', ['socialLogin', 'RestServiceModule', 'ngSanitize']).controller('MainController', function($scope, $http, socialLoginService, $rootScope, RestApiService) {
     $scope.userLogggedIn = false;
-
-
-    $scope.posts = {};
-
-    $http.get("/api/getposts").then(function successCallback(response) {
-
-            $scope.posts = response.data;
-        },
-        function errorCallback(response) {
-            console.log("error in getting posts");
-        })
-
-
-
-
-
     $scope.userExist = false;
     $scope.userProfile = {
         'name': '',
         'email': ''
     };
+
+
+    $scope.getposts = function() {
+        RestApiService.getPosts().then(function(response) {
+            $scope.posts = response.data;
+        }, function(error) {
+            console.log(error);
+        });
+
+    }
+    $scope.getposts();
+
+
+
+
     $rootScope.$on('event:social-sign-in-success', function(event, userDetails) {
 
         $scope.userProfile.email = userDetails.email;
         $scope.userProfile.name = userDetails.name;
-        console.log($scope.userProfile);
-        $http.get("/api/getusers").then(function successCallback(response) {
-            console.log(response.data);
+        // console.log($scope.userProfile);
+        RestApiService.getUsers().then(function successCallback(response) {
             var userlist = response.data;
             for (let index = 0; index < userlist.length; index++) {
                 var element = userlist[index];
@@ -38,7 +36,7 @@ angular.module('MainModule', ['socialLogin', 'ngSanitize']).controller('MainCont
                 }
             }
 
-            console.log($scope.userExist);
+            // console.log($scope.userExist);
             if ($scope.userExist == false) {
                 $scope.addUser();
             }
@@ -51,11 +49,9 @@ angular.module('MainModule', ['socialLogin', 'ngSanitize']).controller('MainCont
 
 
     });
+
     $scope.addUser = function() {
-        $http.post(
-                "/api/newuser",
-                JSON.stringify($scope.userProfile)
-            )
+        RestApiService.addUser(JSON.stringify($scope.userProfile))
             .then(function successCallback(response) {
                 console.log("posted");
 

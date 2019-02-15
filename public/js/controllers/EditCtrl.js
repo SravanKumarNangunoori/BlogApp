@@ -1,4 +1,4 @@
-angular.module('EditModule', ['angular-web-notification']).controller('EditController', function($scope, $http, $location, webNotification) {
+angular.module('EditModule', ['angular-web-notification', 'RestServiceModule']).controller('EditController', function($scope, $http, $location, webNotification, RestApiService) {
 
 
     $scope.postObj = {
@@ -11,8 +11,7 @@ angular.module('EditModule', ['angular-web-notification']).controller('EditContr
         $scope.postObj.title = $scope.title;
         $scope.postObj.content = $scope.tinymceModel;
 
-        $http.post(
-                "/api/post",
+        RestApiService.addPost(
                 JSON.stringify($scope.postObj)
             )
             .then(function successCallback(response) {
