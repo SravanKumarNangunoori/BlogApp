@@ -1,6 +1,7 @@
 var Posts = require("../models/postsModel.js")
 var Users = require("../models/usersModel.js")
 var nodemailer = require('nodemailer');
+
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -37,6 +38,7 @@ module.exports.createPost = function(req, res) {
         });
 
         res.json(result);
+
     })
 };
 

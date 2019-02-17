@@ -20,7 +20,9 @@ angular.module('RestServiceModule', []).factory('RestApiService', function($http
     services.addPost = function(payload) {
         return $http.post(urlBase + '/post', payload)
     }
-
+    services.pushNotification = function(payload) {
+        return $http.post('/push', payload)
+    }
 
     return services;
 });

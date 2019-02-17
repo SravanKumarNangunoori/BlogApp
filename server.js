@@ -9,7 +9,13 @@ var app = express();
 app.use(bodyParser());
 app.use(express.static(__dirname + '/public'));
 
+// subscriber route load and push
+const push = require(__dirname + "/server/push.js");
+const subscribe = require(__dirname + "/server/subscribe.js");
+
 // Api
+app.use('/push', push.pushToUser);
+app.use('/subscribe', subscribe.subscribeUser);
 
 app.get('/api/', postModelController.getresponse);
 app.post('/api/post', postModelController.createPost);
